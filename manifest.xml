@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+
+  <!-- Required identification properties -->
+  <Id>d2d85e0b-c3e5-4cae-af3c-5f912548e1cf</Id>
+  <Version>1.0.0.1</Version>
+  <ProviderName>Bromley Law Group</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+
+  <!-- Visuals & info -->
+  <DisplayName DefaultValue="Estate Clause Helper"/>
+  <Description DefaultValue="Search clauses and insert into Word."/>
+  <IconUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/help"/>
+
+  <!-- Domains the add-in can open -->
+  <AppDomains>
+    <AppDomain>https://myfirmaddins.z13.web.core.windows.net</AppDomain>
+  </AppDomains>
+
+  <!-- Hosts -->
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+
+  <!-- Task-pane source -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://myfirmaddins.z13.web.core.windows.net/taskpane.html"/>
+  </DefaultSettings>
+
+  <!-- Permission set -->
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <!-- VersionOverrides enables ribbon buttons & modern runtime -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="residGetStartedTitle"/>
+            <Description resid="residGetStartedDescription"/>
+            <LearnMoreUrl resid="residLearnMoreUrl"/>
+          </GetStarted>
+          
+          <FunctionFile resid="functionFile"/>
+          
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="grpEstate">
+                <Label resid="residGrpEstateLabel"/>
+                <Icon>
+                  <bt:Image size="16" resid="icon16"/>
+                  <bt:Image size="32" resid="icon32"/>
+                  <bt:Image size="80" resid="icon80"/>
+                </Icon>
+                
+                <Control xsi:type="Button" id="btnOpenPane">
+                  <Label resid="residOpenPaneLabel"/>
+                  <Supertip>
+                    <Title resid="residOpenPaneLabel"/>
+                    <Description resid="residOpenPaneTooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>estateTaskPane</TaskpaneId>
+                    <SourceLocation resid="residTaskpaneUrl"/>
+                  </Action>
+                </Control>
+                
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-16.png"/>
+        <bt:Image id="icon32" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-80.png"/>
+      </bt:Images>
+      
+      <bt:Urls>
+        <bt:Url id="residLearnMoreUrl" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/help"/>
+        <bt:Url id="residTaskpaneUrl" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/taskpane.html"/>
+        <bt:Url id="functionFile" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/function-file.html"/>
+      </bt:Urls>
+      
+      <bt:ShortStrings>
+        <bt:String id="residGetStartedTitle" DefaultValue="Estate Clause Helper"/>
+        <bt:String id="residOpenPaneLabel" DefaultValue="Open Clause Helper"/>
+        <bt:String id="residGrpEstateLabel" DefaultValue="Estate AI"/>
+      </bt:ShortStrings>
+      
+      <bt:LongStrings>
+        <bt:String id="residGetStartedDescription" DefaultValue="Open the task pane to search clauses and insert."/>
+        <bt:String id="residOpenPaneTooltip" DefaultValue="Open the clause helper task pane to search and insert legal clauses."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

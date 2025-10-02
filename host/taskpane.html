@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Clause Suggest</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <style>body{font-family:Arial;margin:12px;}#suggestions{margin-top:12px}.suggest-item{border:1px solid #ccc;padding:6px;margin-bottom:4px;cursor:pointer}.suggest-item:hover{background:#eef}#status{color:#888;font-size:.9em}</style>
+</head>
+<body>
+  <h2>AI Clause Suggestions</h2>
+  <textarea id="inputText" rows="3" style="width:100%;" placeholder="Select text in the document or type context here..."></textarea>
+  <br />
+  <button id="btnSuggest">Suggest</button>
+  <span id="status"></span>
+  <div id="suggestions"></div>
+  <script src="taskpane.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estate Clause Helper</title>
+
+    <!-- Office.js -->
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+    <!-- Fabric UI (optional but recommended) -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: -16px -16px 20px -16px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e4e8;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .clause-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .clause-item {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .clause-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .clause-title {
+            font-weight: 600;
+            color: #24292e;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .clause-preview {
+            color: #586069;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .clause-category {
+            display: inline-block;
+            background: #f1f3f5;
+            color: #495057;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .insert-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .insert-btn:hover {
+            background: #5568d3;
+        }
+
+        .insert-btn:active {
+            transform: scale(0.98);
+        }
+
+        .status-message {
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #586069;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #586069;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Estate Clause Helper</h1>
+        <p>Search and insert legal clauses into your document</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" 
+               class="search-box" 
+               id="searchBox" 
+               placeholder="Search clauses (e.g., 'trust distribution', 'executor powers')...">
+    </div>
+
+    <div id="clauseList" class="clause-list">
+        <div class="loading">Loading clauses...</div>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+
+    <script>
+        // Sample clause data - replace with your actual data source
+        const sampleClauses = [
+            {
+                id: 1,
+                title: "Trust Distribution Clause",
+                category: "Trusts",
+                preview: "The Trustee shall distribute income and principal to beneficiaries in such amounts and at such times as the Trustee deems appropriate...",
+                fullText: "The Trustee shall distribute income and principal to beneficiaries in such amounts and at such times as the Trustee deems appropriate for their health, education, maintenance, and support."
+            },
+            {
+                id: 2,
+                title: "Executor Powers",
+                category: "Estate Administration",
+                preview: "The Executor shall have all powers granted by law and equity, including but not limited to the power to sell, lease, mortgage...",
+                fullText: "The Executor shall have all powers granted by law and equity, including but not limited to the power to sell, lease, mortgage, or otherwise deal with any property of the estate as deemed necessary for proper administration."
+            },
+            {
+                id: 3,
+                title: "Spendthrift Provision",
+                category: "Trusts",
+                preview: "No beneficiary shall have the right to alienate, assign, or transfer any interest in the trust property...",
+                fullText: "No beneficiary shall have the right to alienate, assign, or transfer any interest in the trust property, and no such interest shall be subject to the claims of creditors or to legal process."
+            },
+            {
+                id: 4,
+                title: "Per Stirpes Distribution",
+                category: "Distribution",
+                preview: "Distribution shall be per stirpes, meaning that if a beneficiary predeceases the testator...",
+                fullText: "Distribution shall be per stirpes, meaning that if a beneficiary predeceases the testator, that beneficiary's share shall be distributed equally among their descendants who survive the testator."
+            }
+        ];
+
+        let allClauses = sampleClauses;
+
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Word) {
+                document.getElementById('searchBox').addEventListener('input', handleSearch);
+                displayClauses(allClauses);
+            }
+        });
+
+        function handleSearch(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            
+            if (!searchTerm) {
+                displayClauses(allClauses);
+                return;
+            }
+
+            const filtered = allClauses.filter(clause => 
+                clause.title.toLowerCase().includes(searchTerm) ||
+                clause.category.toLowerCase().includes(searchTerm) ||
+                clause.preview.toLowerCase().includes(searchTerm)
+            );
+
+            displayClauses(filtered);
+        }
+
+        function displayClauses(clauses) {
+            const container = document.getElementById('clauseList');
+            
+            if (clauses.length === 0) {
+                container.innerHTML = '<div class="no-results">No clauses found. Try a different search term.</div>';
+                return;
+            }
+
+            container.innerHTML = clauses.map(clause => `
+                <div class="clause-item">
+                    <div class="clause-title">${clause.title}</div>
+                    <div class="clause-preview">${clause.preview}</div>
+                    <span class="clause-category">${clause.category}</span>
+                    <button class="insert-btn" onclick="insertClause(${clause.id})">
+                        Insert into Document
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function insertClause(clauseId) {
+            const clause = allClauses.find(c => c.id === clauseId);
+            if (!clause) return;
+
+            try {
+                await Word.run(async (context) => {
+                    const selection = context.document.getSelection();
+                    selection.insertText(clause.fullText, Word.InsertLocation.end);
+                    selection.insertParagraph('', Word.InsertLocation.after);
+                    
+                    await context.sync();
+                    
+                    showStatus('Clause inserted successfully!', 'success');
+                });
+            } catch (error) {
+                showStatus('Error inserting clause: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message status-' + type;
+            statusEl.style.display = 'block';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
