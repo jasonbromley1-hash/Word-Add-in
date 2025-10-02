@@ -15,13 +15,13 @@
   <!-- Visuals & info -->
   <DisplayName DefaultValue="Estate Clause Helper"/>
   <Description DefaultValue="Search clauses and insert into Word."/>
-  <IconUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://myfirmaddins.z13.web.core.windows.net/help"/>
+  <IconUrl DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/help.html"/>
 
   <!-- Domains the add-in can open -->
   <AppDomains>
-    <AppDomain>https://myfirmaddins.z13.web.core.windows.net</AppDomain>
+    <AppDomain>https://jasonbromley1-hash.github.io</AppDomain>
   </AppDomains>
 
   <!-- Hosts -->
@@ -31,7 +31,7 @@
 
   <!-- Task-pane source -->
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://myfirmaddins.z13.web.core.windows.net/taskpane.html"/>
+    <SourceLocation DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/taskpane.html"/>
   </DefaultSettings>
 
   <!-- Permission set -->
@@ -86,15 +86,15 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-16.png"/>
-        <bt:Image id="icon32" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-32.png"/>
-        <bt:Image id="icon80" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/assets/icon-80.png"/>
+        <bt:Image id="icon16" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/assets/icon-16.png"/>
+        <bt:Image id="icon32" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/assets/icon-32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/assets/icon-80.png"/>
       </bt:Images>
       
       <bt:Urls>
-        <bt:Url id="residLearnMoreUrl" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/help"/>
-        <bt:Url id="residTaskpaneUrl" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/taskpane.html"/>
-        <bt:Url id="functionFile" DefaultValue="https://myfirmaddins.z13.web.core.windows.net/function-file.html"/>
+        <bt:Url id="residLearnMoreUrl" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/help.html"/>
+        <bt:Url id="residTaskpaneUrl" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/taskpane.html"/>
+        <bt:Url id="functionFile" DefaultValue="https://jasonbromley1-hash.github.io/Word-Add-in/function-file.html"/>
       </bt:Urls>
       
       <bt:ShortStrings>
@@ -110,3 +110,4 @@
     </Resources>
   </VersionOverrides>
 </OfficeApp>
+
